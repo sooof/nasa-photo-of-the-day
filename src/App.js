@@ -1,24 +1,32 @@
-import React from "react";
+import React, { useEffect, useState } from 'react'
 import Pictures from "./Pictures";
 import {BASE_URL, API_KEY} from './constants'
 import "./App.css";
-// import axios from 'axios';
-// export const BASE_URL = 'https://api.nasa.gov';
-// export const API_KEY = 'rbKSdCBqYa49RiyHPrJwq6sWw4XmQG7jkgyjOqMh'
-//https://api.nasa.gov/planetary/apod?api_key=${API_KEY}&count=5
-//https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY
-//// console.log(`${BASE_URL}/planetary/apod?api_key=${API_KEY}&count=5`)
+import axios from 'axios';
+
+
 console.log(BASE_URL)
 console.log(API_KEY)
 
-// function Pictures(props) {
-//   // console.log(pictures)
-//   return <div>1
-//      {/* {props.pictures.map((picture) => <li > {picture['date']} </li>)}
-//      {props.pictures.map((picture) => <img alt='nasa pictures' src={picture['hdurl']} />)} */}
-//   </div>
-// }
 function App() {
+  const [pictures, setPictures] = useState([])
+  // const [currentPicture, setCurrentPicture] = useState(null)
+
+  useEffect(() => {
+    // console.log(`${BASE_URL}/planetary/apod?api_key=${API_KEY}`)
+    axios.get(`${BASE_URL}/planetary/apod?api_key=${API_KEY}`)
+      .then(res => {
+       // console.log(res.data)
+        setPictures(res.data);
+      }).catch(err => console.error(err));
+  }, [])
+  
+  // console.log(currentPicture)
+  console.log(pictures)
+  // pictures.map( (picture) => {
+  //   console.log(picture['date'])
+  // })
+
   return (
     <div className="App">
       <p>
@@ -26,7 +34,7 @@ function App() {
         app! Have fun <span role="img" aria-label='go!'>🚀</span>!
       </p>
       {
-        <Pictures />
+        <Pictures pictures={pictures} />
       }
     </div>
   );
