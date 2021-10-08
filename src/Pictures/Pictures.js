@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState }  from "react";
 import Picture from  "./Picture";
 import "./Pictures.css";
 
@@ -11,29 +11,34 @@ import "./Pictures.css";
 
 
 function Pictures(props) {
-  console.log(props.pictures)
+  // const { likePost, pictureId } = props;
+  //console.log(props.pictures)
+
   const { likePost, pictures } = props;
-  
+  const { pictureId, close } = props
+
+  const [cPicture, setCPicture] = useState(null)
+  const aa = props.pictures.filter( item => item.id == pictureId);
+  // setCPicture(aa)
+
+  console.log("2222   "+pictureId+ " cPicture"+ aa)
+
+
+  // console.log( props.pictures.filter( item => item.id == pictureId) )
+
   return <div className='pictures-container-wrapper'>
-    
-      <div>
-        {/* <h1> {props.pictures.copyright} </h1> */}
-        {/* thumbnailUrl={post.thumbnailUrl} */}
-      </div>
-      {/* <img alt='nasa pictures' src={props.pictures['hdurl']} /> */}
+      <h2>Details (of friend with id {pictureId}):</h2>
 
       {
-        pictures.map( picture => {
+        pictures.map( (picture, i) => {
           //  return <h1>eee1  </h1>
-          return  <Picture 
+          return  pictureId==i && <Picture 
+                    pictureId={pictureId}
                     picture = {picture}
                   />
         })
       }
     
-      
-     {/* {props.pictures.map((picture) => <li > {picture['date']} </li>)} */}
-     {/* {props.pictures.map((picture) => <img alt='nasa pictures' src={picture['hdurl']} />) } */}
   </div>
 }
 export default Pictures;
