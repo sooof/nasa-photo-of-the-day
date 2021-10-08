@@ -6,6 +6,53 @@ import "./App.css";
 import axios from 'axios';
 
 
+import styled, { keyframes } from 'styled-components';
+
+const kf = keyframes`
+  50% {
+    transform: scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+`
+
+const StyledFriend = styled.div`
+  width: 60%;
+  display: flex;
+  justify-content: space-between;
+  padding: 8px;
+  border-bottom: 2px solid red;
+  // -------- grab some of our theme styles!
+  background-color: ${pr => pr.theme.primaryColor};
+  color: ${pr => pr.theme.white};
+  // -------- media query fun! @media (max-width: 550px) {}
+  @media ${pr => pr.theme.breakpointMobile} {
+    width: 100%;
+  }
+  // -------- transitions / animations / ampersand / pseudo-classes
+  transition: all 0.2s ease-in-out;
+  &:hover {
+    transition: all 0.2s ease-in-out;
+    background-color: ${pr => pr.theme.secondaryColor};
+  }
+  &::before {
+    content: '💚';
+  }
+  button {
+    background-color: ${pr => pr.theme.tertiaryColor};
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+  transform: scale(2); //-> start of animation
+  opacity: 0; //-> start of animation
+  animation: ${kf} 0.3s ease-in-out forwards;
+`
+
+
+
 function App() {
   const [pictures, setPictures] = useState([])
   const [searchState, setSearchState] = useState("");
@@ -22,7 +69,7 @@ function App() {
     // console.log(`${BASE_URL}/planetary/apod?api_key=${API_KEY}`)
     // console.log(`${BASE_URL}/planetary/apod?api_key=${API_KEY}&count=5`)
     // axios.get(`${BASE_URL}/planetary/apod?api_key=${API_KEY}`)
-    axios.get(`${BASE_URL}/planetary/apod?api_key=${API_KEY}&count=5`)
+    axios.get(`${BASE_URL}/planetary/apod?api_key=${API_KEY}&count=15`)
       .then(res => {
  
        res.data.forEach( (picture, i) => {
